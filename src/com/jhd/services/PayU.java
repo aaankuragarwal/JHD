@@ -1,13 +1,11 @@
 package com.jhd.services;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -16,6 +14,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
+@Path("/paymentservice")
 public class PayU {
 
   public static String baseUrl = "https://test.payu.in/_payment";
