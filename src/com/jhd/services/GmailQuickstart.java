@@ -35,7 +35,7 @@ import javax.ws.rs.PathParam;
 import com.google.api.client.util.Base64;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
-
+@Path("/emailservice")
 public class GmailQuickstart {
     /** Application name. */
     private static final String APPLICATION_NAME =
