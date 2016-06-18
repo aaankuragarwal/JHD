@@ -89,7 +89,7 @@ public class SendOTP {
 		//Sender ID,While using route4 sender id should be 6 characters long.
 		String senderId = "JUSTHD";
 		//Your message to send, Add URL encoding here.
-		String message = obj.getString("OTP")+" is your verification code.";
+		String message = obj.getString("otp")+" is your verification code.";
 		//define route
 		String route="4";
 
@@ -107,7 +107,7 @@ public class SendOTP {
 		//Prepare parameter string 
 		StringBuilder sbPostData= new StringBuilder(mainUrl);
 		sbPostData.append("authkey="+authkey); 
-		sbPostData.append("&mobiles="+obj.getString("mobileNumber"));
+		sbPostData.append("&mobiles="+obj.getString("mobile"));
 		sbPostData.append("&message="+encoded_message);
 		sbPostData.append("&route="+route);
 		sbPostData.append("&sender="+senderId);
