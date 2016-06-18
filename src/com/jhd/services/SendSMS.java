@@ -11,7 +11,7 @@ public class SendSMS {
 
 
  
-	public static void main(String args[]){
+	public void sendOTP(String msg){
 		//Your authentication key
 		String authkey = "114971AFjay0rnEGI5754ff0a";
 		//Multiple mobiles numbers separated by comma

@@ -1,6 +1,26 @@
 package com.jhd.services;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -8,32 +28,12 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.gmail.GmailScopes;
-import com.google.api.services.gmail.model.*;
-import com.google.api.services.gmail.Gmail;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Base64;
+import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
+import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 @Path("/emailservice")
 public class GmailQuickstart {
@@ -141,14 +141,24 @@ public class GmailQuickstart {
     
     @GET
     @Path("/sendmail/{recipientEmail}/{ccEmail}/{fromEmail}/{title}/{message}")
-    public static void Send(@PathParam("recipientEmail") String recipientEmail,@PathParam("ccEmail")  String ccEmail,@PathParam("fromEmail")  String fromEmail,@PathParam("title")  String title,@PathParam("message")  String message) throws IOException, MessagingException {
+    public static void sendMail(@PathParam("recipientEmail") String recipientEmail,@PathParam("ccEmail")  String ccEmail,@PathParam("fromEmail")  String fromEmail,@PathParam("title")  String title,@PathParam("message")  String message) throws IOException, MessagingException {
         Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, title, message));
         getGmailService().users().messages().send("me", m).execute();
     }
 	
+    
+    @POST
+    @Path("/send/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response send(String msg) throws IOException, MessagingException {
+    	String output = "POST:Jersey say : " + msg;
+    	System.out.println(msg);
+        return Response.status(200).entity(output).build();
+    }
+    
 	public static void main(String args[]) throws IOException, MessagingException{
     	//  ankur.wipropro@gmail.com/ankur.wipropro@gmail.com/ankur.wipropro@gmail.com/"Your first JHD mail"/"Emailing start ho gaya"
-		//Send("ankur.wipropro@gmail.com","ankur.wipropro@gmail.com","ankur.wipropro@gmail.com","Your first JHD mail","Emailing start ho gaya");
+		sendMail("ankur.wipropro@gmail.com","ankur.wipropro@gmail.com","justhomedeliveries@gmail.com","Your first JHD mail","Emailing start ho gaya");
     }
 
 }
