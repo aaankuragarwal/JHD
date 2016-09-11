@@ -13,6 +13,10 @@ import com.jhd.queue.QueueConsumer;
 public class MyMQueueListener  implements ServletContextListener {
 	private QueueConsumer otpConsumer= null; 
 	private QueueConsumer pushmsgConsumer= null;
+	private QueueConsumer smsConsumer= null;
+	private QueueConsumer emailConsumer= null;
+	private Thread emailConsumerThread= null;
+	private Thread smsConsumerThread= null;
 	private Thread otpConsumerThread= null;
 	private Thread pushmsgConsumerThread= null;
 	
@@ -27,6 +31,30 @@ public class MyMQueueListener  implements ServletContextListener {
 			}
         	otpConsumerThread = new Thread(otpConsumer);
         	otpConsumerThread.start();
+        }
+        
+        if((smsConsumerThread == null) || (!smsConsumerThread.isAlive()))	{
+        	try {
+        		smsConsumer = new QueueConsumer("smsQueue");
+			} catch (KeyManagementException | NoSuchAlgorithmException
+					| IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	smsConsumerThread = new Thread(smsConsumer);
+        	smsConsumerThread.start();
+        }
+        
+        if((emailConsumerThread == null) || (!emailConsumerThread.isAlive()))	{
+        	try {
+        		emailConsumer = new QueueConsumer("emailQueue");
+			} catch (KeyManagementException | NoSuchAlgorithmException
+					| IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	emailConsumerThread = new Thread(emailConsumer);
+        	emailConsumerThread.start();
         }
         
         if((pushmsgConsumerThread == null) || (!pushmsgConsumerThread.isAlive()))	{
@@ -48,6 +76,10 @@ public class MyMQueueListener  implements ServletContextListener {
         	otpConsumerThread.interrupt();
         	pushmsgConsumerThread.stop();
         	pushmsgConsumerThread.interrupt();
+        	emailConsumerThread.stop();
+        	emailConsumerThread.interrupt();
+        	smsConsumerThread.stop();
+        	smsConsumerThread.interrupt();
         } catch (Exception ex) {
         }
     }

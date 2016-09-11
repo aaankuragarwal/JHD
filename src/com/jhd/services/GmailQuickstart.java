@@ -10,9 +10,12 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -125,7 +128,13 @@ public class GmailQuickstart {
         }
         email.addRecipient(javax.mail.Message.RecipientType.TO, tAddress);
         email.setSubject(subject);
-        email.setText(bodyText);
+       
+        Multipart mp = new MimeMultipart();
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        htmlPart.setContent(bodyText, "text/html");
+        mp.addBodyPart(htmlPart);
+        email.setContent(mp);
+        
         return email;
     }
 
@@ -157,8 +166,7 @@ public class GmailQuickstart {
     }
     
 	public static void main(String args[]) throws IOException, MessagingException{
-    	//  ankur.wipropro@gmail.com/ankur.wipropro@gmail.com/ankur.wipropro@gmail.com/"Your first JHD mail"/"Emailing start ho gaya"
-		sendMail("ankur.wipropro@gmail.com","ankur.wipropro@gmail.com","justhomedeliveries@gmail.com","Your first JHD mail","Emailing start ho gaya");
+		
     }
 
 }

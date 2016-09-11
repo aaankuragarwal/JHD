@@ -12,6 +12,7 @@ import javax.mail.MessagingException;
 import org.apache.commons.lang.SerializationUtils;
 
 import com.jhd.services.GCMBroadcast;
+import com.jhd.services.GmailQuickstart;
 import com.jhd.services.SendOTP;
 import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.Envelope;
@@ -54,6 +55,12 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer{
 			}
 			else if(map.get("eventType").equals("pushmsgEvent")){
 				GCMBroadcast.pushSingleMsg1((String)map.get("Message"), (String)map.get("CollapseKey"), (String)map.get("phnRegId"));
+			}
+			else if(map.get("eventType").equals("sendSMS")){
+				SendOTP.sendSMS((String)map.get("msg"), (String)map.get("mobile"));
+			}
+			else if(map.get("eventType").equals("sendEmail")){
+				GmailQuickstart.sendMail((String)map.get("to"), (String)map.get("cc"), (String)map.get("from"), (String)map.get("title"), (String)map.get("msg"));
 			}
 		}
 		catch (Exception e) {

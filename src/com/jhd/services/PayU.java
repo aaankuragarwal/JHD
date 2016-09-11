@@ -1,4 +1,7 @@
 package com.jhd.services;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,6 +11,8 @@ import javax.mail.internet.AddressException;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+
+import org.json.JSONObject;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -23,8 +28,9 @@ public class PayU {
   public static String key = "gtKFFx";
 
   @SuppressWarnings("unchecked")
-public static void doTransaction(String countryCode, String mobileNumber){
-    try {
+public static String doTransaction(String countryCode, String mobileNumber){
+	  String output=null;
+	  try {
       Client client = Client.create();
       String Url  = baseUrl;
       WebResource webResource = client.resource(Url);
@@ -47,12 +53,14 @@ public static void doTransaction(String countryCode, String mobileNumber){
     		    .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
     		    .post(ClientResponse.class, formData);
 
-      String output = response.getEntity(String.class);
+      output = response.getEntity(String.class);
       
-      System.out.println(output);
+      //System.out.println(output);
+      
     } catch (Exception e) {
       e.printStackTrace();
     }
+    return output;
   }
   
   public static String getCheckSum() throws NoSuchAlgorithmException, IOException{
@@ -65,13 +73,27 @@ public static void doTransaction(String countryCode, String mobileNumber){
 		{ 
 			sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1)); 
 		} 
-		System.out.println("Hex format : " + sb.toString());
+		//System.out.println("Hex format : " + sb.toString());
 		return sb.toString();
   }
   
   
   public static void main(String args[]) throws AddressException, MessagingException, NoSuchAlgorithmException, IOException{
-	  doTransaction("91", "9987800826");
+	  String res=doTransaction("91", "9987800826");
+	  //JSONObject obj = new JSONObject(res);
+	  File file = new File("C:\\JHD\\test.html");
+
+		// if file doesnt exists, then create it
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+
+		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(res);
+		bw.close();
+		System.out.println(res);
+	  
   }
 
   

@@ -39,6 +39,53 @@ public class QueueEvents {
 	}
 	
 	@POST
+	@Path("/addsmsevent/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String addSMSEvent(String msg) throws KeyManagementException, NoSuchAlgorithmException, IOException, URISyntaxException {
+		  Producer producer = new Producer("smsQueue");
+		  try{
+		  	JSONObject obj = new JSONObject(msg);
+		  	
+		  	HashMap message = new HashMap();
+			message.put("msg", obj.getString("msg"));
+			message.put("mobile", obj.getString("mobile"));
+			message.put("eventType", "sendSMS");
+			producer.sendMessage(message);
+		  } 
+		  catch (Exception e) 
+		{ 
+				e.printStackTrace();
+				return "failed";
+		}
+		return "success";
+	}
+	
+	@POST
+	@Path("/addemailevent/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String addEmailEvent(String msg) throws KeyManagementException, NoSuchAlgorithmException, IOException, URISyntaxException {
+		  Producer producer = new Producer("emailQueue");
+		  try{
+		  	JSONObject obj = new JSONObject(msg);
+		  	
+		  	HashMap message = new HashMap();
+			message.put("to", obj.getString("to"));
+			message.put("cc", obj.getString("cc"));
+			message.put("from", obj.getString("from"));
+			message.put("title", obj.getString("title"));
+			message.put("msg", obj.getString("msg"));
+			message.put("eventType", "sendEmail");
+			producer.sendMessage(message);
+		  } 
+		  catch (Exception e) 
+		{ 
+				e.printStackTrace();
+				return "failed";
+		}
+		return "success";
+	}
+	
+	@POST
 	@Path("/addpushmsgevent/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String addPushMsgEvent(String msg) throws KeyManagementException, NoSuchAlgorithmException, IOException, URISyntaxException {
