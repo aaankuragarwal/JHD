@@ -125,9 +125,9 @@ public class GmailQuickstart {
         MimeMessage email = new MimeMessage(session);
         InternetAddress tAddress = new InternetAddress(to);
         InternetAddress cAddress = cc.isEmpty() ? null : new InternetAddress(cc);
-      //  InternetAddress fAddress = new InternetAddress(from);
+        InternetAddress fAddress = new InternetAddress("justhomedeliveries@gmail.com");
 
-       // email.setFrom(fAddress);
+        email.setFrom(fAddress);
         if (cAddress != null) {
             email.addRecipient(javax.mail.Message.RecipientType.CC, cAddress);
         }
@@ -172,6 +172,7 @@ public class GmailQuickstart {
         	template = EmailTemplateReader.readTemplate(status.toLowerCase());
     	}
 
+    	
     	HashMap<String,String> dataMap = (HashMap<String,String>)map.get("data");
     	for (Map.Entry<String, String> entry : template.entrySet()) {
     		
