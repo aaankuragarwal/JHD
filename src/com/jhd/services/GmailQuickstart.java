@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
@@ -20,7 +23,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -38,6 +40,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
+import com.jhd.utils.EmailTemplateReader;
 @Path("/emailservice")
 public class GmailQuickstart {
     /** Application name. */
@@ -65,6 +68,8 @@ public class GmailQuickstart {
      */
     private static final List<String> SCOPES =
         Arrays.asList(GmailScopes.GMAIL_LABELS,GmailScopes.GMAIL_COMPOSE, GmailScopes.GMAIL_INSERT, GmailScopes.GMAIL_MODIFY, GmailScopes.GMAIL_READONLY, GmailScopes.MAIL_GOOGLE_COM);
+
+	private static final String HashMap = null;
 
     static {
         try {
@@ -113,16 +118,16 @@ public class GmailQuickstart {
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
-	private static MimeMessage createEmail(String to, String cc, String from, String subject, String bodyText) throws MessagingException {
+	private static MimeMessage createEmail(String to, String cc, String subject, String bodyText) throws MessagingException {
         Properties props = new Properties();
         Session session = Session.getDefaultInstance(props, null);
 
         MimeMessage email = new MimeMessage(session);
         InternetAddress tAddress = new InternetAddress(to);
         InternetAddress cAddress = cc.isEmpty() ? null : new InternetAddress(cc);
-        InternetAddress fAddress = new InternetAddress(from);
+      //  InternetAddress fAddress = new InternetAddress(from);
 
-        email.setFrom(fAddress);
+       // email.setFrom(fAddress);
         if (cAddress != null) {
             email.addRecipient(javax.mail.Message.RecipientType.CC, cAddress);
         }
@@ -131,7 +136,7 @@ public class GmailQuickstart {
        
         Multipart mp = new MimeMultipart();
         MimeBodyPart htmlPart = new MimeBodyPart();
-        htmlPart.setContent(bodyText, "text/html");
+        htmlPart.setText(bodyText);
         mp.addBodyPart(htmlPart);
         email.setContent(mp);
         
@@ -148,12 +153,40 @@ public class GmailQuickstart {
     }
     
     
-    @GET
+   /* @GET
     @Path("/sendmail/{recipientEmail}/{ccEmail}/{fromEmail}/{title}/{message}")
-    public static void sendMail(@PathParam("recipientEmail") String recipientEmail,@PathParam("ccEmail")  String ccEmail,@PathParam("fromEmail")  String fromEmail,@PathParam("title")  String title,@PathParam("message")  String message) throws IOException, MessagingException {
-        Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, title, message));
+    public static void sendMail(@PathParam("recipientEmail") String recipientEmail,@PathParam("ccEmail")  String ccEmail,@PathParam("fromEmail")  String fromEmail,@PathParam("type")  String type,@PathParam("data")  String data) throws IOException, MessagingException {
+       
+    	
+    	Message m = createMessageWithEmail(createEmail(recipientEmail, ccEmail, fromEmail, type, data));
         getGmailService().users().messages().send("me", m).execute();
+    }*/
+    
+   
+    public static void sendMail(Map map) throws IOException, MessagingException {
+    	Map<String, String> template=null;
+    	if("welcome".equalsIgnoreCase((String)map.get("type"))){
+        	template= EmailTemplateReader.readTemplate("welcome");
+    	}else{
+    		String status = (String)(((HashMap) map.get("data")).get("status"));
+        	template = EmailTemplateReader.readTemplate(status);
+    	}
+
+    	HashMap<String,String> dataMap = (HashMap<String,String>)map.get("data");
+    	for (Map.Entry<String, String> entry : template.entrySet()) {
+    		
+    		String value=entry.getValue();
+    		for (Map.Entry<String,String> dataentry : dataMap.entrySet()) {
+    			value = value.replace("#" + dataentry.getKey() + "#", dataentry.getValue());
+    		}
+    		entry.setValue(value);	
+    	}
+    	
+    	Message m = createMessageWithEmail(createEmail((String)map.get("to"), (String)map.get("cc"),(String) template.get("subject"), (String) template.get("content")));
+        getGmailService().users().messages().send("me", m).execute();
+    	
     }
+    	
 	
     
     @POST
