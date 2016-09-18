@@ -169,7 +169,7 @@ public class GmailQuickstart {
         	template= EmailTemplateReader.readTemplate("welcome");
     	}else{
     		String status = (String)(((HashMap) map.get("data")).get("status"));
-        	template = EmailTemplateReader.readTemplate(status);
+        	template = EmailTemplateReader.readTemplate(status.toLowerCase());
     	}
 
     	HashMap<String,String> dataMap = (HashMap<String,String>)map.get("data");
