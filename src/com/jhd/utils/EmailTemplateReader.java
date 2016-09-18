@@ -24,8 +24,9 @@ public class EmailTemplateReader {
 		InputStream input = null;
 
 		try {
-
-			input = EmailTemplateReader.class.getResourceAsStream(".//email_templates//"+path+".properties");
+			
+			
+			input = EmailTemplateReader.class.getResourceAsStream(".\\email_templates\\"+path+".properties");
 			props.load(input);
 			
 			mp=new HashMap<>();
