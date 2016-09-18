@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.jhd.services.GmailQuickstart;
+
 public class EmailTemplateReader {
 	public static Map<String, String> readTemplate(String path){
 		Map<String, String> mp=null;
@@ -24,8 +26,8 @@ public class EmailTemplateReader {
 		InputStream input = null;
 
 		try {
-			
-			input = EmailTemplateReader.class.getResourceAsStream(".//email_templates//"+path+".properties");
+			input =
+					EmailTemplateReader.class.getResourceAsStream("/resources/email_templates/"+path+".properties");
 			props.load(input);
 			
 			mp=new HashMap<>();

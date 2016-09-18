@@ -10,8 +10,9 @@
         <resource>
             <directory>src</directory>
             <includes>
-                <include>**/*.properties</include>
-            </includes>
+          		<include>**/*.json</include>
+          		<include>**/*.properties</include>
+        	</includes>
         </resource>
     </resources>
     <plugins>
