@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 
 import org.apache.commons.lang.SerializationUtils;
 
+import com.jhd.services.EmailService;
 import com.jhd.services.GCMBroadcast;
 import com.jhd.services.GmailQuickstart;
 import com.jhd.services.SendOTP;
@@ -60,7 +61,7 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer{
 				SendOTP.sendSMS((String)map.get("msg"), (String)map.get("mobile"));
 			}
 			else if(map.get("eventType").equals("sendEmail")){
-				GmailQuickstart.sendMail(map);
+				EmailService.sendMail(map);
 				//GmailQuickstart.sendMail((String)map.get("to"), (String)map.get("cc"), (String)map.get("from"), (String)map.get("type"), (String)map.get("data"));
 			}
 		}
