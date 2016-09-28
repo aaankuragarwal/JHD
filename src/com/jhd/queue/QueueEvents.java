@@ -98,9 +98,12 @@ public class QueueEvents {
 		  	JSONObject obj = new JSONObject(msg);
 		  	
 		  	HashMap message = new HashMap();
-			message.put("Message", obj.getString("Message"));
-			message.put("CollapseKey", obj.getString("CollapseKey"));
-			message.put("phnRegId", obj.getString("phnRegId"));
+			message.put("to", obj.getString("to"));
+			message.put("title", obj.getString("title"));
+			message.put("msg", obj.getString("msg"));
+			message.put("url", obj.getString("url"));
+			message.put("order_id", obj.getString("order_id"));
+			message.put("type", obj.getString("type"));
 			message.put("eventType", "pushmsgEvent");
 			producer.sendMessage(message);
 		  } 

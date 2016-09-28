@@ -89,7 +89,7 @@ public class GmailQuickstart {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-            GmailQuickstart.class.getResourceAsStream("/resources/client_secret.json");
+            GmailQuickstart.class.getResourceAsStream("/resources/client_id.json");
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -125,7 +125,7 @@ public class GmailQuickstart {
         MimeMessage email = new MimeMessage(session);
         InternetAddress tAddress = new InternetAddress(to);
         InternetAddress cAddress = cc.isEmpty() ? null : new InternetAddress(cc);
-        InternetAddress fAddress = new InternetAddress("justhomedeliveries@gmail.com");
+        InternetAddress fAddress = new InternetAddress("justhomedelivery@gmail.com");
 
         email.setFrom(fAddress);
         if (cAddress != null) {
