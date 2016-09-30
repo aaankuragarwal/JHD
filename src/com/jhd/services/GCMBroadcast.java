@@ -20,7 +20,7 @@ public class GCMBroadcast {
 	
 	// The SENDER_ID here is the "Browser Key" that was generated when I
 	// created the API keys for my Google APIs project.
-	private static final String SENDER_ID = "AlzaSyC-1R76DrFNI0ey6OUs90C2UtmTTZevSfY";
+	private static final String SENDER_ID = "AIzaSyBcsaTBfYhMufsFgM7uPh1YBG2L3IaLb9c";
 	
 	// This is a *cheat*  It is a hard-coded registration ID from an Android device
 	// that registered itself with GCM using the same project id shown above.
@@ -37,7 +37,7 @@ public class GCMBroadcast {
 	
 	  
 	  public static void main(String args[]) throws IOException{
-		  sendFCMMsg("/topics/Indirapuram","Offers1","JHD offers","","","promo");
+		  sendFCMMsg("fNOJGgjKxaE:APA91bFdgqWJs5CHIjTy8A8YX_yc5TGwqSB-_1aptzaH456jArP4JIqDQPD3nARm9B3HJyfvmlYT3M6nm_gGjTGkHZUTv1rqH4R7VFLotzgPV_252o9NnBlQpmJbWHUgYUWXujcENBza","Offers2","JHD offers","test","https://s3.ap-south-1.amazonaws.com/jhd-category-images/4_cover_banner-Baby.png","promo");
 	  }
 	  
 	  
@@ -68,7 +68,7 @@ public class GCMBroadcast {
 		    .url("https://fcm.googleapis.com/fcm/send")
 		    .post(body)
 		    .addHeader("content-type", "application/json")
-		    .addHeader("authorization", "key=AIzaSyC-1R76DrFNI0ey6OUs90C2UtmTTZevSfY")
+		    .addHeader("authorization", "key=AIzaSyBYKbkdhW7qCXJOD6g8qj3crSy5MbpK0VY")
 		    .build();
 		  
 		  Response response = client.newCall(request).execute();
