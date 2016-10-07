@@ -36,7 +36,7 @@ public class EmailService {
 	    		entry.setValue(value);	
 	    	}
 	    	
-	    	Email from = new Email("ankur.wipropro@gmail.com");
+	    	Email from = new Email("cs@justhomedelivery.com");
 	        String subject = (String) template.get("subject");
 	        Email to = new Email((String)map.get("to"));
 	        Content content = new Content("text/plain", (String) template.get("content"));
