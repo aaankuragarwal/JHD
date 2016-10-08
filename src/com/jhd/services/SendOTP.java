@@ -50,7 +50,7 @@ public class SendOTP {
   
   @GET
   @Produces("application/json")
-  @Path("generateotp/{countryCode}/{mobileNumber}")
+  @Path("/generateotp/{countryCode}/{mobileNumber}")
   public String generateOTP(@PathParam("countryCode")  String countryCode,@PathParam("mobileNumber") String mobileNumber){
 	  String output=null;
 	  try {
@@ -77,6 +77,15 @@ public class SendOTP {
       e.printStackTrace();
     }
     return output;
+  }
+  
+  
+  @GET
+  @Produces("application/json")
+  @Path("/echo")
+  public String echo(){
+	  System.out.println("echo");
+	  return "success";
   }
   
   
