@@ -74,5 +74,6 @@ public class GCMBroadcast {
 		  Response response = client.newCall(request).execute();
 		  System.out.println(response.isSuccessful());
 		  System.out.println(response.message());
+		  response.close();
 	  }
 }

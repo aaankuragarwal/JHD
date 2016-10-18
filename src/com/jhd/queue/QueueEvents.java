@@ -37,6 +37,8 @@ public class QueueEvents {
 		{ 
 				e.printStackTrace();
 				return "failed";
+		}finally{
+			producer.close();
 		}
 		return "success";
 	}
@@ -59,6 +61,8 @@ public class QueueEvents {
 		{ 
 				e.printStackTrace();
 				return "failed";
+		}finally{
+			producer.close();
 		}
 		return "success";
 	}
@@ -85,6 +89,8 @@ public class QueueEvents {
 		{ 
 				e.printStackTrace();
 				return "failed";
+		}finally{
+			producer.close();
 		}
 		return "success";
 	}
@@ -111,6 +117,8 @@ public class QueueEvents {
 		{ 
 				e.printStackTrace();
 				return "failed";
+		}finally{
+			producer.close();
 		}
 		return "success";
 	}
