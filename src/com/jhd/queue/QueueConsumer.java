@@ -63,6 +63,9 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer{
 			else if(map.get("eventType").equals("sendEmail")){
 				EmailService.sendMailBCC(map);
 				//GmailQuickstart.sendMail((String)map.get("to"), (String)map.get("cc"), (String)map.get("from"), (String)map.get("type"), (String)map.get("data"));
+			}else if(map.get("eventType").equals("sendOtpEmail")){
+				SendOTP.sendOTP1((String)map.get("otp"), (String)map.get("mobile"));
+				EmailService.sendOTPMail((String)map.get("otp"),(String)map.get("email"));
 			}
 		}
 		catch (Exception e) {

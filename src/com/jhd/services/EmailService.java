@@ -124,7 +124,57 @@ public class EmailService {
 	          throw ex;
 	        }
 	 }
+
 	 
+	 
+	 public static void sendOTPMail(String otp, String emailid) throws IOException, MessagingException {
+	    	Map<String, String> template=null;
+        	template= EmailTemplateReader.readTemplate("otp");
+
+	    	for (Map.Entry<String, String> entry : template.entrySet()) {
+	    		
+	    		String value=entry.getValue();
+	    		value = value.replace("#OTP#",otp);
+	    		entry.setValue(value);	
+	    	}
+	    	
+	    	Mail mail = new Mail();
+
+	        Email fromEmail = new Email();
+	        fromEmail.setName("Just Home Delivery");
+	        fromEmail.setEmail("cs@justhomedelivery.com");
+	        mail.setFrom(fromEmail);
+	        
+	        Personalization personalization = new Personalization();
+	        
+	        Email to = new Email();
+	        to.setEmail((String)emailid);
+	        personalization.addTo(to);
+
+	        personalization.setSubject((String) template.get("subject"));
+	        
+	        Content content = new Content();
+	        content.setType("text/plain");
+	        content.setValue((String) template.get("content"));
+	        
+	        mail.addContent(content);
+	        mail.addPersonalization(personalization);
+	        
+	        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+	    	Request request = new Request();
+	        try {
+	          request.method = Method.POST;
+	          request.endpoint = "mail/send";
+	          request.body = mail.build();
+	          Response response = sg.api(request);
+	          System.out.println(response.statusCode);
+	          System.out.println(response.body);
+	          System.out.println(response.headers);
+	        } catch (IOException ex) {
+	          throw ex;
+	        }
+	 }
+
 	 
 	 
 	 public static void sendMailTemplate(Map map) throws IOException, MessagingException {
@@ -138,15 +188,27 @@ public class EmailService {
 	        Personalization personalization = new Personalization();
 	        
 	        Email to = new Email();
-	        to.setEmail((String)map.get("to"));
+	        to.setEmail((String)map.get("ankur.agarwal5@yahoo.com"));
 	        personalization.addTo(to);
 
-	        HashMap<String,String> dataMap = (HashMap<String,String>)map.get("data");
-	    	for (Map.Entry<String,String> dataentry : dataMap.entrySet()) {
-	    		personalization.addSubstitution("#" + dataentry.getKey() + "#", dataentry.getValue());
-	    	}
+	        mail.addSection("#NAME#", "Ankur Agarwal");
+	        mail.addSection("#order id#", "JHD-1-1234565");
+	        mail.addSection("#bill#", "Rs.130");
+	        mail.addSection("#delivery#", "Rs.30");
+	        mail.addSection("#total#", "Rs.160");
+	        mail.addSection("#discount#", "Rs.0");
 	        
-	    	mail.setTemplateId("f1251073-8baf-43d5-bd0f-d69cb0e014bd");
+	        mail.addSection("#discount#", "Rs.0");
+	        mail.addSection("#discount#", "Rs.0");
+	        mail.addSection("#discount#", "Rs.0");
+	        mail.addSection("#discount#", "Rs.0");
+	        mail.addSection("#discount#", "Rs.0");
+	        
+	        
+	        
+	        
+	        
+	    	mail.setTemplateId("7a1bed23-cf98-499b-9e5f-624f6c7ba843");
 	        mail.addPersonalization(personalization);
 	        
 	        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));

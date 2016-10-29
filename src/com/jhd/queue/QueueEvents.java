@@ -44,6 +44,31 @@ public class QueueEvents {
 	}
 	
 	@POST
+	@Path("/addotpemailevent/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String addOTPEmailEvent(String msg) throws KeyManagementException, NoSuchAlgorithmException, IOException, URISyntaxException {
+		  Producer producer = new Producer("otpQueue");
+		  try{
+		  	JSONObject obj = new JSONObject(msg);
+		  	
+		  	HashMap message = new HashMap();
+			message.put("otp", obj.getString("otp"));
+			message.put("mobile", obj.getString("mobile"));
+			message.put("email", obj.getString("email"));
+			message.put("eventType", "sendOtpEmail");
+			producer.sendMessage(message);
+		  } 
+		  catch (Exception e) 
+		{ 
+				e.printStackTrace();
+				return "failed";
+		}finally{
+			producer.close();
+		}
+		return "success";
+	}
+	
+	@POST
 	@Path("/addsmsevent/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String addSMSEvent(String msg) throws KeyManagementException, NoSuchAlgorithmException, IOException, URISyntaxException {
