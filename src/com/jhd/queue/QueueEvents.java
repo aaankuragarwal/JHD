@@ -134,6 +134,7 @@ public class QueueEvents {
 			message.put("msg", obj.getString("msg"));
 			message.put("url", obj.getString("url"));
 			message.put("order_id", obj.getString("order_id"));
+			message.put("cat_id", obj.getString("cat_id"));
 			message.put("type", obj.getString("type"));
 			message.put("eventType", "pushmsgEvent");
 			producer.sendMessage(message);
