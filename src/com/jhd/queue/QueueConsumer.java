@@ -55,7 +55,7 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer{
 				SendOTP.sendOTP1((String)map.get("otp"), (String)map.get("mobile"));
 			}
 			else if(map.get("eventType").equals("pushmsgEvent")){
-				GCMBroadcast.sendFCMMsg((String)map.get("to"), (String)map.get("title"), (String)map.get("msg"), (String)map.get("order_id"), (String)map.get("url"), (String)map.get("type"));
+				GCMBroadcast.sendFCMMsg((String)map.get("to"), (String)map.get("title"), (String)map.get("msg"), (String)map.get("order_id"), (String)map.get("url"), (String)map.get("type"),(String)map.get("cat_id"));
 			}
 			else if(map.get("eventType").equals("sendSMS")){
 				SendOTP.sendSMS((String)map.get("msg"), (String)map.get("mobile"));

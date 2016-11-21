@@ -41,7 +41,7 @@ public class GCMBroadcast {
 	  }
 	  
 	  
-	  public static void sendFCMMsg(String to,String title, String msg,String orderId,String url,String type) throws IOException{
+	  public static void sendFCMMsg(String to,String title, String msg,String orderId,String url,String type,String cat_id) throws IOException{
 		  OkHttpClient client = new OkHttpClient();
 		  
 		  JSONObject json = new JSONObject(); 
@@ -55,6 +55,7 @@ public class GCMBroadcast {
 			if(type.equalsIgnoreCase("status")){
 				json1.put("order_id", orderId);
 			}else{
+				json1.put("cat_id", cat_id);
 				json1.put("url", url);
 			}
 			json1.put("type",type);
