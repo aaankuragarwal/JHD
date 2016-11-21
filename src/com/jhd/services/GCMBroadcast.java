@@ -37,7 +37,7 @@ public class GCMBroadcast {
 	
 	  
 	  public static void main(String args[]) throws IOException{
-		  sendFCMMsg("fNOJGgjKxaE:APA91bFdgqWJs5CHIjTy8A8YX_yc5TGwqSB-_1aptzaH456jArP4JIqDQPD3nARm9B3HJyfvmlYT3M6nm_gGjTGkHZUTv1rqH4R7VFLotzgPV_252o9NnBlQpmJbWHUgYUWXujcENBza","Offers2","JHD offers","test","https://s3.ap-south-1.amazonaws.com/jhd-category-images/4_cover_banner-Baby.png","promo");
+		  //sendFCMMsg("fNOJGgjKxaE:APA91bFdgqWJs5CHIjTy8A8YX_yc5TGwqSB-_1aptzaH456jArP4JIqDQPD3nARm9B3HJyfvmlYT3M6nm_gGjTGkHZUTv1rqH4R7VFLotzgPV_252o9NnBlQpmJbWHUgYUWXujcENBza","Offers2","JHD offers","test","https://s3.ap-south-1.amazonaws.com/jhd-category-images/4_cover_banner-Baby.png","promo");
 	  }
 	  
 	  
