@@ -46,7 +46,7 @@ public class EmailService {
 	        Mail mail = new Mail(from, subject, to, content);
 	    	
 	    	//Message m = createMessageWithEmail(createEmail((String)map.get("to"), (String)map.get("cc"),(String) template.get("subject"), (String) template.get("content")));
-	    	SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+	    	SendGrid sg = new SendGrid("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");
 	    	Request request = new Request();
 	        try {
 	          request.method = Method.POST;
@@ -68,7 +68,12 @@ public class EmailService {
 	        	template= EmailTemplateReader.readTemplate("welcome");
 	    	}else{
 	    		String status = (String)(((HashMap) map.get("data")).get("status"));
-	        	template = EmailTemplateReader.readTemplate(status.toLowerCase());
+	    		int cashback = Integer.parseInt((String)(((HashMap) map.get("data")).get("CASHBACK")));
+	    		if(cashback >0 && status.equalsIgnoreCase("delivered")){
+	    			template = EmailTemplateReader.readTemplate("cashbackdelivered");
+	    		}else{
+	    			template = EmailTemplateReader.readTemplate(status.toLowerCase());
+	        	}
 	    	}
 
 	    	HashMap<String,String> dataMap = (HashMap<String,String>)map.get("data");
@@ -110,7 +115,7 @@ public class EmailService {
 	        mail.addContent(content);
 	        mail.addPersonalization(personalization);
 	        
-	        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+	        SendGrid sg = new SendGrid("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");
 	    	Request request = new Request();
 	        try {
 	          request.method = Method.POST;
@@ -160,7 +165,7 @@ public class EmailService {
 	        mail.addContent(content);
 	        mail.addPersonalization(personalization);
 	        
-	        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+	        SendGrid sg = new SendGrid("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");
 	    	Request request = new Request();
 	        try {
 	          request.method = Method.POST;

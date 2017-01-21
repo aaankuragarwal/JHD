@@ -38,7 +38,13 @@ public abstract class EndPoint{
 	    
          //hostname of your rabbitmq server
          factory.setUri("amqp://WsNp4rFL:X983mITnJp6XG8KXV1Wi3O3u5yWWJz9e@spotted-cowslip-58.bigwig.lshift.net:11170/y9wZtr8-oq_b");
-
+       //  factory.setUri("amqp://guest:guest@ec2-35-154-18-230.ap-south-1.compute.amazonaws.com:5672/");
+         
+         /*factory.setUsername("mqadmin");
+         factory.setPassword("mqadmin");
+         factory.setVirtualHost("/");
+         factory.setHost("ec2-52-66-176-65.ap-south-1.compute.amazonaws.com");
+         factory.setPort(5672);*/
          //getting a connection
          connection = factory.newConnection();
 	    

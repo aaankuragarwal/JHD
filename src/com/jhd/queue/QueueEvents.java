@@ -100,13 +100,8 @@ public class QueueEvents {
 		  try{
 		  	JSONObject obj = new JSONObject(msg);
 		  	HashMap message = EmailTemplateReader.jsonToMap(obj);
-		  	/*HashMap message = new HashMap();
-			message.put("to", obj.getString("to"));
-			message.put("cc", obj.getString("cc"));
-			message.put("from", obj.getString("from"));
-			//message.put("title", obj.getString("title"));
-			message.put("type", obj.getString("type"));
-			message.put("data", obj.getJSONObject("data"));*/
+			//HashMap message = new HashMap();
+			//message.put("msg", msg);
 			message.put("eventType", "sendEmail");
 			producer.sendMessage(message);
 		  } 
@@ -134,7 +129,7 @@ public class QueueEvents {
 			message.put("msg", obj.getString("msg"));
 			message.put("url", obj.getString("url"));
 			message.put("order_id", obj.getString("order_id"));
-			message.put("cat_id", obj.getString("cat_id"));
+			//message.put("cat_id", obj.getString("cat_id"));
 			message.put("type", obj.getString("type"));
 			message.put("eventType", "pushmsgEvent");
 			producer.sendMessage(message);

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>JHD</groupId>
   <artifactId>JHD</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.10-SNAPSHOT</version>
   <packaging>war</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>

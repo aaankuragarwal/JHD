@@ -7,18 +7,17 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.mail.MessagingException;
-
 import org.apache.commons.lang.SerializationUtils;
+import org.json.JSONObject;
 
 import com.jhd.services.EmailService;
 import com.jhd.services.GCMBroadcast;
-import com.jhd.services.GmailQuickstart;
 import com.jhd.services.SendOTP;
+import com.jhd.utils.EmailTemplateReader;
+import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
-import com.rabbitmq.client.AMQP.BasicProperties;
 
 public class QueueConsumer extends EndPoint implements Runnable, Consumer{
 	
@@ -61,8 +60,10 @@ public class QueueConsumer extends EndPoint implements Runnable, Consumer{
 				SendOTP.sendSMS((String)map.get("msg"), (String)map.get("mobile"));
 			}
 			else if(map.get("eventType").equals("sendEmail")){
+				//JSONObject obj = new JSONObject((String)map.get("msg"));
+			  	//HashMap message = EmailTemplateReader.jsonToMap(obj);
+			  	//message.put("eventType", "sendEmail");
 				EmailService.sendMailBCC(map);
-				//GmailQuickstart.sendMail((String)map.get("to"), (String)map.get("cc"), (String)map.get("from"), (String)map.get("type"), (String)map.get("data"));
 			}else if(map.get("eventType").equals("sendOtpEmail")){
 				SendOTP.sendOTP1((String)map.get("otp"), (String)map.get("mobile"));
 				EmailService.sendOTPMail((String)map.get("otp"),(String)map.get("email"));
