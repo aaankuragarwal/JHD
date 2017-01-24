@@ -46,7 +46,7 @@ public class EmailService {
 	        Mail mail = new Mail(from, subject, to, content);
 	    	
 	    	//Message m = createMessageWithEmail(createEmail((String)map.get("to"), (String)map.get("cc"),(String) template.get("subject"), (String) template.get("content")));
-	    	SendGrid sg = new SendGrid("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");
+	    	SendGrid sg = new SendGrid("");
 	    	Request request = new Request();
 	        try {
 	          request.method = Method.POST;
@@ -67,8 +67,12 @@ public class EmailService {
 	    	if("welcome".equalsIgnoreCase((String)map.get("type"))){
 	        	template= EmailTemplateReader.readTemplate("welcome");
 	    	}else{
+	    		int cashback=0;
 	    		String status = (String)(((HashMap) map.get("data")).get("status"));
-	    		int cashback = Integer.parseInt((String)(((HashMap) map.get("data")).get("CASHBACK")));
+	    		if(!(((HashMap) map.get("data")).get("CASHBACK") == null)){
+	    			cashback = Integer.parseInt((String)(((HashMap) map.get("data")).get("CASHBACK")));
+	    		}
+	    		//int cashback = Integer.parseInt((String)(((HashMap) map.get("data")).get("CASHBACK")));
 	    		if(cashback >0 && status.equalsIgnoreCase("delivered")){
 	    			template = EmailTemplateReader.readTemplate("cashbackdelivered");
 	    		}else{
@@ -114,8 +118,8 @@ public class EmailService {
 	        
 	        mail.addContent(content);
 	        mail.addPersonalization(personalization);
-	        
-	        SendGrid sg = new SendGrid("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");
+	        SendGrid sg = new SendGrid("");
+	        //SendGrid sg = new SendGrid("");
 	    	Request request = new Request();
 	        try {
 	          request.method = Method.POST;
@@ -164,8 +168,8 @@ public class EmailService {
 	        
 	        mail.addContent(content);
 	        mail.addPersonalization(personalization);
-	        
-	        SendGrid sg = new SendGrid("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");
+	        SendGrid sg = new SendGrid("");
+	        //SendGrid sg = new SendGrid("");
 	    	Request request = new Request();
 	        try {
 	          request.method = Method.POST;
